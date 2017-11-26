@@ -11,11 +11,11 @@ ansible_become=yes
 # ============== Origin =============
 
 openshift_deployment_type=origin
-openshift_release=v3.7
+openshift_release=v3.6.1
+openshift_image_tag=v3.6.1
 
-containerized=true
-
-openshift_disable_check=memory_availability,disk_availability
+openshift_disable_check=memory_availability,disk_availability,docker_image_availability,docker_storage
+openshift_docker_options="--selinux-enabled --log-driver=journald --insecure-registry 172.30.0.0/16"
 
 osm_default_node_selector="type=app"
 openshift_router_selector='type=infra'
@@ -24,9 +24,11 @@ openshift_registry_selector='type=infra'
 openshift_logging_install_logging=true
 openshift_metrics_install_metrics=true
 
+openshift_clock_enabled=true
+
 
 # uncomment the following to enable htpasswd authentication; defaults to DenyAllPasswordIdentityProvider
-#openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+openshift_master_identity_providers=[{'name': 'DenyAll', 'login': 'true', 'challenge': 'true', 'kind': 'DenyAllIdentityProvider'}]
 
 # ====== Master configuration ========
 openshift_master_console_port = 443
@@ -42,7 +44,7 @@ origin.juanwolf.fr
 
 # host group for nodes, includes region info
 [nodes]
-origin.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'infra'}" openshift_ip="192.168.0.4"  openshift_schedulable='true'
-node00.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'yes', 'type': 'app'}" openshift_ip="192.168.0.3"
-# node01.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'app'}" openshift_ip="192.168.0.5"
+origin.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'infra'}"   openshift_schedulable='true'
+node00.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'yes', 'type': 'app'}"
+node01.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'app'}"
 
