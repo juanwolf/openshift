@@ -1,0 +1,48 @@
+# Create an OSEv3 group that contains the masters and nodes groups
+[OSEv3:children]
+masters
+nodes
+
+[OSEv3:vars]
+#=============== ANSIBLE =============
+ansible_ssh_user=theUser
+ansible_become=yes
+
+# ============== Origin =============
+
+openshift_deployment_type=origin
+openshift_release=v3.7
+
+containerized=true
+
+openshift_disable_check=memory_availability,disk_availability
+
+osm_default_node_selector="type=app"
+openshift_router_selector='type=infra'
+openshift_registry_selector='type=infra'
+
+openshift_logging_install_logging=true
+openshift_metrics_install_metrics=true
+
+
+# uncomment the following to enable htpasswd authentication; defaults to DenyAllPasswordIdentityProvider
+#openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+
+# ====== Master configuration ========
+openshift_master_console_port = 443
+
+# host group for masters
+[masters]
+origin.juanwolf.fr
+
+# host group for etcd
+[etcd]
+origin.juanwolf.fr
+
+
+# host group for nodes, includes region info
+[nodes]
+origin.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'infra'}" openshift_ip="192.168.0.4"  openshift_schedulable='true'
+node00.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'yes', 'type': 'app'}" openshift_ip="192.168.0.3"
+node01.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'app'}" openshift_ip="192.168.0.5"
+
