@@ -44,5 +44,5 @@ origin.juanwolf.fr
 [nodes]
 origin.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'infra'}" openshift_ip="192.168.0.4"  openshift_schedulable='true'
 node00.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'yes', 'type': 'app'}" openshift_ip="192.168.0.3"
-node01.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'app'}" openshift_ip="192.168.0.5"
+# node01.juanwolf.fr openshift_node_labels="{'region': 'uk', 'storage': 'no', 'type': 'app'}" openshift_ip="192.168.0.5"
 
